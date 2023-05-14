@@ -32,7 +32,7 @@ namespace Client
         {
             Server server = null;
             client.Show();
-            client.AddServer(server);
+            //client.AddServer(server);
             this.Close();
         }
 

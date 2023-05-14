@@ -1,45 +1,55 @@
 ﻿using System.Net;
 using System.Net.Sockets;
 
-namespace Client
+namespace Client.MyClasses
 {
     public class MyPing
     {
+        public IPAddress Address { get; private set; }
         public bool IsConnected { get; private set; }
-        public float ResponseTime{ get; private set; }
+        public float ResponseTime { get; private set; }
         public byte TTL { get; private set; }
         public string Message { get; private set; }
+
+        private byte[] _buffer;
+        private EndPoint _endPoint;
+        private Socket _socket;
+
+        const int timeout = 5000;
+        const int packetSize = 32;
+
         public MyPing(IPAddress address)
         {
-            const int timeout = 1000;
-            const int packetSize = 32;
+            Address = address;
+            _buffer = new byte[packetSize];
+            new Random().NextBytes(_buffer);
 
-            byte[] buffer = new byte[packetSize];
-            new Random().NextBytes(buffer);
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Icmp);
+            _socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, timeout);
 
-            using (Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Raw, ProtocolType.Icmp))
+            _endPoint = new IPEndPoint(address, 0);
+
+            SendPing();
+        }
+        public void SendPing()
+        {
+            DateTime sendTime = DateTime.Now;
+            _socket.SendTo(CreatePingPacket(_buffer), _endPoint);
+
+            byte[] responseBuffer = new byte[_buffer.Length + 28];
+            try
             {
-                socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReceiveTimeout, timeout);
-
-                EndPoint endPoint = new IPEndPoint(address, 0);
-                socket.SendTo(CreatePingPacket(buffer), endPoint);
-                DateTime sendTime = DateTime.Now;
-    
-                byte[] responseBuffer = new byte[packetSize + 28];
-                try
-                {
-                    socket.ReceiveFrom(responseBuffer, ref endPoint);
-                    DateTime receiveTime = DateTime.Now;
-                    ResponseTime = (float)Math.Round(((float)(receiveTime.Ticks - sendTime.Ticks))/10000, 2);
-                    TTL = GetTTL(responseBuffer);
-                    IsConnected = true;
-                    Message = $"Ответ от {address}: число байт={packetSize} время={ResponseTime}мс, TTL={TTL}\r\n";
-                }
-                catch (SocketException ex)
-                {
-                    IsConnected = false;
-                    Message = $"Потеря эхо-пакета!\r\n";
-                }
+                _socket.ReceiveFrom(responseBuffer, ref _endPoint);
+                DateTime receiveTime = DateTime.Now;
+                ResponseTime = (float)Math.Round(((float)(receiveTime.Ticks - sendTime.Ticks)) / 10000, 2);
+                TTL = GetTTL(responseBuffer);
+                IsConnected = true;
+                Message = $"Ответ от {Address}: число байт={_buffer.Length} время={ResponseTime}мс, TTL={TTL}\r\n";
+            }
+            catch (SocketException ex)
+            {
+                IsConnected = false;
+                Message = $"Ответ от {Address}: потеря эхо-пакета!\r\n";
             }
         }
         private static byte GetTTL(byte[] ipHeader)

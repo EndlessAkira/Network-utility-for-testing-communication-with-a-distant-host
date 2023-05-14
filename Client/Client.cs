@@ -1,10 +1,7 @@
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
 using System.Net.NetworkInformation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
 using Client.MyClasses;
-using System.Net.Http.Headers;
 
 namespace Client
 {
@@ -123,6 +120,7 @@ namespace Client
                 {
                     _servers[serversListBox.SelectedIndex].LinkingByName(messageTextBox, _numberOfEchoRequests);
                 }
+                MessageBox.Show("Выполнение утилиты Ping завершено!");
             }
             else
             {
@@ -178,6 +176,19 @@ namespace Client
         {
             //_servers.Add(server);
         }
+
+        private void tracertButton_Click(object sender, EventArgs e)
+        {
+            if (ServerSelected())
+            {
+                MyTracert.Trace(_servers[serversListBox.SelectedIndex].HostName, messageTextBox);
+                MessageBox.Show("Выполнение утилиты Tracert завершено!");
+            }
+            else
+            {
+                MessageBox.Show("Выберите сервер из списка для взаимодействия!");
+            }
+        }
     }
 
     public class Server
@@ -205,13 +216,8 @@ namespace Client
                     connectedEchoPackage.Add(myPing.IsConnected);
                     string message = $"{i + 1}) " + myPing.Message;
                     textBox.AppendText(message);
-                    textBox.Refresh();
-                    textBox.Select(textBox.Text.Length - message.Length, message.Length - 1);
-                    
-                    textBox.SelectionColor = Color.Red;
                     if (myPing.IsConnected)
                     {
-                        textBox.SelectionColor = Color.DarkGreen;
                         time.Add(myPing.ResponseTime);
                     }
                     textBox.Update();

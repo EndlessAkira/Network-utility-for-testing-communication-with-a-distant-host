@@ -41,7 +41,6 @@
             this.minCountLabel = new System.Windows.Forms.Label();
             this.maxCountLabel = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
-            this.tracertCheckBox = new System.Windows.Forms.CheckBox();
             this.numberOfEchoRequestsTextBox = new System.Windows.Forms.TextBox();
             this.infoButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
@@ -49,6 +48,7 @@
             this.clearMessageTextBoxButton = new System.Windows.Forms.Button();
             this.messageTextBox = new System.Windows.Forms.RichTextBox();
             this.findOtherButton = new System.Windows.Forms.Button();
+            this.tracertButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numberOfEchoRequestsTrackBar)).BeginInit();
             this.SuspendLayout();
             // 
@@ -111,7 +111,7 @@
             this.contactByNameRadioButton.AutoSize = true;
             this.contactByNameRadioButton.Checked = true;
             this.contactByNameRadioButton.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactByNameRadioButton.Location = new System.Drawing.Point(532, 338);
+            this.contactByNameRadioButton.Location = new System.Drawing.Point(522, 338);
             this.contactByNameRadioButton.Name = "contactByNameRadioButton";
             this.contactByNameRadioButton.Size = new System.Drawing.Size(231, 26);
             this.contactByNameRadioButton.TabIndex = 6;
@@ -123,7 +123,7 @@
             // 
             this.contactByIPRadioButton.AutoSize = true;
             this.contactByIPRadioButton.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactByIPRadioButton.Location = new System.Drawing.Point(532, 371);
+            this.contactByIPRadioButton.Location = new System.Drawing.Point(522, 370);
             this.contactByIPRadioButton.Name = "contactByIPRadioButton";
             this.contactByIPRadioButton.Size = new System.Drawing.Size(213, 26);
             this.contactByIPRadioButton.TabIndex = 7;
@@ -142,7 +142,7 @@
             // 
             // numberOfEchoRequestsTrackBar
             // 
-            this.numberOfEchoRequestsTrackBar.Location = new System.Drawing.Point(532, 455);
+            this.numberOfEchoRequestsTrackBar.Location = new System.Drawing.Point(522, 456);
             this.numberOfEchoRequestsTrackBar.Maximum = 200;
             this.numberOfEchoRequestsTrackBar.Minimum = 2;
             this.numberOfEchoRequestsTrackBar.Name = "numberOfEchoRequestsTrackBar";
@@ -155,7 +155,7 @@
             // 
             this.minCountLabel.AutoSize = true;
             this.minCountLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.minCountLabel.Location = new System.Drawing.Point(506, 455);
+            this.minCountLabel.Location = new System.Drawing.Point(496, 470);
             this.minCountLabel.Name = "minCountLabel";
             this.minCountLabel.Size = new System.Drawing.Size(20, 22);
             this.minCountLabel.TabIndex = 10;
@@ -165,7 +165,7 @@
             // 
             this.maxCountLabel.AutoSize = true;
             this.maxCountLabel.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.maxCountLabel.Location = new System.Drawing.Point(971, 455);
+            this.maxCountLabel.Location = new System.Drawing.Point(961, 468);
             this.maxCountLabel.Name = "maxCountLabel";
             this.maxCountLabel.Size = new System.Drawing.Size(40, 22);
             this.maxCountLabel.TabIndex = 11;
@@ -175,26 +175,15 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(585, 420);
+            this.label4.Location = new System.Drawing.Point(475, 423);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(229, 22);
             this.label4.TabIndex = 12;
             this.label4.Text = "Количество эхо-запросов:";
             // 
-            // tracertCheckBox
-            // 
-            this.tracertCheckBox.AutoSize = true;
-            this.tracertCheckBox.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.tracertCheckBox.Location = new System.Drawing.Point(532, 532);
-            this.tracertCheckBox.Name = "tracertCheckBox";
-            this.tracertCheckBox.Size = new System.Drawing.Size(213, 26);
-            this.tracertCheckBox.TabIndex = 13;
-            this.tracertCheckBox.Text = "Определить маршрут";
-            this.tracertCheckBox.UseVisualStyleBackColor = true;
-            // 
             // numberOfEchoRequestsTextBox
             // 
-            this.numberOfEchoRequestsTextBox.Location = new System.Drawing.Point(820, 418);
+            this.numberOfEchoRequestsTextBox.Location = new System.Drawing.Point(710, 421);
             this.numberOfEchoRequestsTextBox.Name = "numberOfEchoRequestsTextBox";
             this.numberOfEchoRequestsTextBox.Size = new System.Drawing.Size(81, 27);
             this.numberOfEchoRequestsTextBox.TabIndex = 14;
@@ -256,7 +245,7 @@
             // findOtherButton
             // 
             this.findOtherButton.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.findOtherButton.Location = new System.Drawing.Point(217, 401);
+            this.findOtherButton.Location = new System.Drawing.Point(217, 468);
             this.findOtherButton.Name = "findOtherButton";
             this.findOtherButton.Size = new System.Drawing.Size(155, 44);
             this.findOtherButton.TabIndex = 20;
@@ -264,10 +253,22 @@
             this.findOtherButton.UseVisualStyleBackColor = true;
             this.findOtherButton.Click += new System.EventHandler(this.findOtherButton_Click);
             // 
+            // tracertButton
+            // 
+            this.tracertButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.tracertButton.Location = new System.Drawing.Point(217, 401);
+            this.tracertButton.Name = "tracertButton";
+            this.tracertButton.Size = new System.Drawing.Size(155, 41);
+            this.tracertButton.TabIndex = 21;
+            this.tracertButton.Text = "Tracert 💬";
+            this.tracertButton.UseVisualStyleBackColor = true;
+            this.tracertButton.Click += new System.EventHandler(this.tracertButton_Click);
+            // 
             // Client
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(1041, 578);
+            this.ClientSize = new System.Drawing.Size(1041, 546);
+            this.Controls.Add(this.tracertButton);
             this.Controls.Add(this.findOtherButton);
             this.Controls.Add(this.messageTextBox);
             this.Controls.Add(this.clearMessageTextBoxButton);
@@ -275,7 +276,6 @@
             this.Controls.Add(this.closeButton);
             this.Controls.Add(this.infoButton);
             this.Controls.Add(this.numberOfEchoRequestsTextBox);
-            this.Controls.Add(this.tracertCheckBox);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.maxCountLabel);
             this.Controls.Add(this.minCountLabel);
@@ -290,7 +290,7 @@
             this.Controls.Add(this.serversLabel);
             this.Name = "Client";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Клиентская часть к.р.\"Связь с удалённым хостом\"";
+            this.Text = "Приложение связи с удалённым хостом. Разработал ст. гр. 10701221 Гайдуков С.Ю.";
             this.Load += new System.EventHandler(this.Client_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numberOfEchoRequestsTrackBar)).EndInit();
             this.ResumeLayout(false);
@@ -312,7 +312,6 @@
         private Label minCountLabel;
         private Label maxCountLabel;
         private Label label4;
-        private CheckBox tracertCheckBox;
         private TextBox numberOfEchoRequestsTextBox;
         private Button infoButton;
         private Button closeButton;
@@ -320,5 +319,6 @@
         private Button clearMessageTextBoxButton;
         private RichTextBox messageTextBox;
         private Button findOtherButton;
+        private Button tracertButton;
     }
 }
