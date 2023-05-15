@@ -8,11 +8,11 @@ namespace Client.MyClasses
 
     public abstract class MyTracert
     {
-        public static void Trace(string domainName, RichTextBox textBox)
+        public static void Trace(MyServer server, RichTextBox textBox)
         {
             textBox.Clear();
-            IPAddress address = Dns.GetHostAddresses(domainName)[0];
-            textBox.AppendText($"Трассировка маршрута к {domainName} [{address}]\r\n\r\n");
+            IPAddress address = server.IP;
+            textBox.AppendText($"Трассировка маршрута к {server.HostName} [{address}]\r\n\r\n");
             int ttl = 1;
             while (true)
             {

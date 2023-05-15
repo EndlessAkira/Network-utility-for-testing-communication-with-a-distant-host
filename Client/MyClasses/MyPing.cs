@@ -15,7 +15,7 @@ namespace Client.MyClasses
         private EndPoint _endPoint;
         private Socket _socket;
 
-        const int timeout = 5000;
+        const int timeout = 1000;
         const int packetSize = 32;
 
         public MyPing(IPAddress address)
@@ -29,10 +29,6 @@ namespace Client.MyClasses
 
             _endPoint = new IPEndPoint(address, 0);
 
-            SendPing();
-        }
-        public void SendPing()
-        {
             DateTime sendTime = DateTime.Now;
             _socket.SendTo(CreatePingPacket(_buffer), _endPoint);
 

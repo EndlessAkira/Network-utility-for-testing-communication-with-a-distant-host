@@ -30,7 +30,7 @@
         {
             this.addButton = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.otherServerDataTextBox = new System.Windows.Forms.TextBox();
+            this.textBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // addButton
@@ -54,13 +54,13 @@
             this.label3.TabIndex = 25;
             this.label3.Text = "Введите имя хоста или IPv4:";
             // 
-            // otherServerDataTextBox
+            // textBox
             // 
-            this.otherServerDataTextBox.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.otherServerDataTextBox.Location = new System.Drawing.Point(38, 81);
-            this.otherServerDataTextBox.Name = "otherServerDataTextBox";
-            this.otherServerDataTextBox.Size = new System.Drawing.Size(420, 27);
-            this.otherServerDataTextBox.TabIndex = 24;
+            this.textBox.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.textBox.Location = new System.Drawing.Point(38, 81);
+            this.textBox.Name = "textBox";
+            this.textBox.Size = new System.Drawing.Size(420, 27);
+            this.textBox.TabIndex = 24;
             // 
             // AddServer
             // 
@@ -69,11 +69,9 @@
             this.ClientSize = new System.Drawing.Size(520, 226);
             this.Controls.Add(this.addButton);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.otherServerDataTextBox);
+            this.Controls.Add(this.textBox);
             this.Name = "AddServer";
             this.Text = "Окно добавления нового сервера";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.AddServer_FormClosing);
-            this.Load += new System.EventHandler(this.AddServer_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -83,6 +81,6 @@
 
         private Button addButton;
         private Label label3;
-        private TextBox otherServerDataTextBox;
+        private TextBox textBox;
     }
 }

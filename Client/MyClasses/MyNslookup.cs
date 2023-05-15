@@ -5,14 +5,13 @@ namespace Client.MyClasses
 {
     internal abstract class MyNslookup
     {
-        public static string GetInfo(string hostname)
+        public static string GetInfo(MyServer server)
         {
-            string message = $"Информация о сервере {hostname}:\r\n\r\n";
+            string message = $"Информация о сервере {server.HostName}:\r\n\r\n";
             try
             {
-                IPHostEntry iPHostEntry = Dns.GetHostByName(hostname);
-                Console.WriteLine(iPHostEntry.HostName);
-                IPAddress[] ips = iPHostEntry.AddressList;
+                IPHostEntry host = Dns.GetHostByName(server.HostName);
+                IPAddress[] ips = host.AddressList;
                 List<IPAddress> ipV4 = new List<IPAddress>();
                 List<IPAddress> ipV6 = new List<IPAddress>();
                 foreach (IPAddress ip in ips)
@@ -42,8 +41,7 @@ namespace Client.MyClasses
                         message += "     " + ip.ToString() + "\r\n";
                     }
                 }
-                string[] aliesNames = iPHostEntry.Aliases;
-                MessageBox.Show($"{aliesNames.Length > 0}");
+                string[] aliesNames = host.Aliases;
                 if (aliesNames.Length > 0)
                 {
                     message += "\r\nAlias-имена домена:\r\n";
