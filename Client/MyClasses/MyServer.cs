@@ -55,7 +55,7 @@ namespace Client.MyClasses
                     textBox.Update();
                 }
                 textBox.AppendText($"\r\nСтатистика Ping для {IP}:");
-                textBox.AppendText($"Пакетов:\r\n     отправлено = {numberOfEchoRequests},\r\n     получено = {NumberPacketsReceived(connectedEchoPackage)},\r\n     потеряно = {NumberLostPackets(connectedEchoPackage, numberOfEchoRequests)} ( {GetProcent(NumberLostPackets(connectedEchoPackage, numberOfEchoRequests), numberOfEchoRequests)}% )");
+                textBox.AppendText($"\r\n     Пакетов:  отправлено = {numberOfEchoRequests}, получено = {NumberPacketsReceived(connectedEchoPackage)}, потеряно = {NumberLostPackets(connectedEchoPackage, numberOfEchoRequests)} ( {GetProcent(NumberLostPackets(connectedEchoPackage, numberOfEchoRequests), numberOfEchoRequests)}% )");
                 if (time.Count > 0)
                 {
                     textBox.AppendText($"\r\nПриблизительное время приёма-передачи в мс:\r\n     Минимальное={FindMin(time)}мс,\r\n     Максимальное={FindMax(time)}мс,\r\n     Среднее={FindAverage(time)}мс\r\n");
@@ -63,7 +63,7 @@ namespace Client.MyClasses
             }
             catch (Exception ex)
             {
-                textBox.Text += $"АБОБА?\r\n";
+                textBox.Text += $"При проверке связи не удалось подключиться к выбранному узлу\r\n";
                 textBox.Update();
             }
         }

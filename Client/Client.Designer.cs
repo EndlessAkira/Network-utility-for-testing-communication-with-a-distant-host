@@ -43,7 +43,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.numberOfEchoRequestsTextBox = new System.Windows.Forms.TextBox();
             this.infoButton = new System.Windows.Forms.Button();
-            this.closeButton = new System.Windows.Forms.Button();
+            this.deleteButton = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.clearMessageTextBoxButton = new System.Windows.Forms.Button();
             this.messageTextBox = new System.Windows.Forms.RichTextBox();
@@ -98,7 +98,7 @@
             // contactServerButton
             // 
             this.contactServerButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactServerButton.Location = new System.Drawing.Point(217, 338);
+            this.contactServerButton.Location = new System.Drawing.Point(28, 404);
             this.contactServerButton.Name = "contactServerButton";
             this.contactServerButton.Size = new System.Drawing.Size(155, 41);
             this.contactServerButton.TabIndex = 5;
@@ -193,7 +193,7 @@
             // infoButton
             // 
             this.infoButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.infoButton.Location = new System.Drawing.Point(28, 401);
+            this.infoButton.Location = new System.Drawing.Point(217, 338);
             this.infoButton.Name = "infoButton";
             this.infoButton.Size = new System.Drawing.Size(155, 41);
             this.infoButton.TabIndex = 15;
@@ -201,16 +201,16 @@
             this.infoButton.UseVisualStyleBackColor = true;
             this.infoButton.Click += new System.EventHandler(this.infoButton_Click);
             // 
-            // closeButton
+            // deleteButton
             // 
-            this.closeButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.closeButton.Location = new System.Drawing.Point(28, 470);
-            this.closeButton.Name = "closeButton";
-            this.closeButton.Size = new System.Drawing.Size(155, 41);
-            this.closeButton.TabIndex = 16;
-            this.closeButton.Text = "Close ❎";
-            this.closeButton.UseVisualStyleBackColor = true;
-            this.closeButton.Click += new System.EventHandler(this.closeButton_Click);
+            this.deleteButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.deleteButton.Location = new System.Drawing.Point(28, 471);
+            this.deleteButton.Name = "deleteButton";
+            this.deleteButton.Size = new System.Drawing.Size(155, 41);
+            this.deleteButton.TabIndex = 16;
+            this.deleteButton.Text = "Delete ❎";
+            this.deleteButton.UseVisualStyleBackColor = true;
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // label2
             // 
@@ -273,7 +273,7 @@
             this.Controls.Add(this.messageTextBox);
             this.Controls.Add(this.clearMessageTextBoxButton);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.closeButton);
+            this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.infoButton);
             this.Controls.Add(this.numberOfEchoRequestsTextBox);
             this.Controls.Add(this.label4);
@@ -290,7 +290,8 @@
             this.Controls.Add(this.serversLabel);
             this.Name = "Client";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Приложение связи с удалённым хостом. Разработал ст. гр. 10701221 Гайдуков С.Ю.";
+            this.Text = "Сетевая утилита для тестирования связи с удалённым хостом. Разработал ст. гр. 107" +
+    "01221 Гайдуков С.Ю.";
             this.Load += new System.EventHandler(this.Client_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numberOfEchoRequestsTrackBar)).EndInit();
             this.ResumeLayout(false);
@@ -314,7 +315,7 @@
         private Label label4;
         private TextBox numberOfEchoRequestsTextBox;
         private Button infoButton;
-        private Button closeButton;
+        private Button deleteButton;
         private Label label2;
         private Button clearMessageTextBoxButton;
         private RichTextBox messageTextBox;

@@ -24,10 +24,6 @@ namespace Client
         //
 
         private Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-        private void closeButton_Click(object sender, EventArgs e)
-        {
-            Close();
-        }
 
         private void updateListServersButton_Click(object sender, EventArgs e)
         {
@@ -189,6 +185,31 @@ namespace Client
             {
                 MyTracert.Trace(_servers[serversListBox.SelectedIndex], messageTextBox);
                 MessageBox.Show("¬ыполнение утилиты Tracert завершено!");
+            }
+            else
+            {
+                MessageBox.Show("¬ыберите сервер из списка дл€ взаимодействи€!");
+            }
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (ServerSelected())
+            {
+                string serverName = _servers[serversListBox.SelectedIndex].HostName;
+                IPAddress serverIP = _servers[serversListBox.SelectedIndex].IP;
+                _servers[serversListBox.SelectedIndex] = null;
+                List<MyServer> _updateServers = new List<MyServer>();
+                for (int i = 0; i < _servers.Count; i++)
+                {
+                    if (_servers[i] != null)
+                    {
+                        _updateServers.Add(_servers[i]);
+                    }
+                }
+                _servers = _updateServers;
+                UpdateServerListBox();
+                MessageBox.Show($"¬ыбранный сервер был успешно удален!\r\n Name: {serverName}\r\n IP: {serverIP}");
             }
             else
             {

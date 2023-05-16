@@ -21,9 +21,9 @@ namespace Client
         Client client;
         private void addButton_Click(object sender, EventArgs e)
         {
+            string data = textBox.Text;
             try
             {
-                string data = textBox.Text;
                 if (data == "")
                 {
                     MessageBox.Show("Поле ввода осталось незаполненным!");
@@ -62,7 +62,7 @@ namespace Client
             }
             catch(Exception ex)
             {
-                MessageBox.Show($"{ex}");
+                MessageBox.Show($"{data} - этот хост неизвестен!\r\nПричиной проблемы может быть следующее:\r\n  1) Неверное имя хоста или IP-адрес\r\n  2) Отсутствие подключения к Интернету");
                 textBox.Text = "Добавить сервер не удалось..";
             }
         }
