@@ -28,7 +28,7 @@
   <Class Name="Client.MyClasses.MyServer">
     <Position X="6.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>gQAAAAAAAAIIEgAAAAAAAAAAKAAAAAAAAEAAABABAAA=</HashCode>
+      <HashCode>gQAAAAAAAAIIAAAQAQAAAAAAKAAAAAAABEAAAJABAAA=</HashCode>
       <FileName>MyClasses\MyServer.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -52,19 +52,21 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>ABACAAAAACIBRhgEYBHpAgEOFMggAAAUgAAAQAIBEBA=</HashCode>
+      <HashCode>ABACAAAAACIBRlgEYAHpEgAOFEgoAAAUoAAAQAABEAE=</HashCode>
       <FileName>Client.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Client.Loading">
     <Position X="0.5" Y="1.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAABEAAA=</HashCode>
-      <FileName>Loading.cs</FileName>
+      <HashCode>AAAAAAAAACAAABAAAACAAAACAAAAAAAAAAAAAABAAAA=</HashCode>
     </TypeIdentifier>
   </Class>
   <Class Name="Client.Program">
     <Position X="0.5" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Program.cs</FileName>

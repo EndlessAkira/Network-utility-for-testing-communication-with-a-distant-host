@@ -12,67 +12,27 @@ namespace Client
             InitializeComponent();
         }
 
-        private const int _port = 8888;
-        private const int _size = 1024;
+        List<MyServer> _servers = new List<MyServer>();               // Лист подключенных серверов
 
-        List<MyServer> _servers = new List<MyServer>();
-        // 
-        private int _numberOfEchoRequests = 2;
+        private const int _port = 8888;                               // Порт подключения
+        private int _numberOfEchoRequests = 2;                        // Кол-во эхо-запросов
+        private readonly int _numberOfEchoRequestsMaxValue = 200;     // Макс. кол-во эхо-запросов
+        private readonly int _numberOfEchoRequestsMinValue = 2;       // Мин. кол-во эхо-запросов
 
-        private readonly int _numberOfEchoRequestsMaxValue = 200;
-        private readonly int _numberOfEchoRequestsMinValue = 2;
-        //
-
-        private Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
-        private void updateListServersButton_Click(object sender, EventArgs e)
+        private Socket _socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); // Сокет связи
+        
+        // Метод срабатывающий при загрузке формы
+        private void Client_Load(object sender, EventArgs e)
         {
-            _servers.Clear();
-            serversListBox.Items.Clear();
-            Loading loading = new Loading();
-            loading.Show();
-            this.Hide();
-            loading.Update();
-            IPEndPoint[] allIPEndPoints = IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners();
-            List<IPEndPoint> iPEndPoints = new List<IPEndPoint>();
-            foreach (IPEndPoint iPEndPoint in allIPEndPoints)
-            {
-                if (iPEndPoint.Address.ToString() != IPAddress.None.ToString() && iPEndPoint.Address.ToString() != IPAddress.Any.ToString() && iPEndPoint.AddressFamily == AddressFamily.InterNetwork)
-                {
-                    iPEndPoints.Add(iPEndPoint);   
-                }
-            }
-            for (int i = 0; i < iPEndPoints.Count; i++)  
-            {
-                _servers.Add(new MyServer(iPEndPoints[i].Address));
-                
-            }
-            try
-            {
-                IPEndPoint iPEnd = new IPEndPoint(Dns.GetHostByName("www.google.com").AddressList[0], _port);
-                _servers.Add(new MyServer("www.google.com"));
-                iPEnd = new IPEndPoint(Dns.GetHostByName("www.microsoft.com").AddressList[0], _port);
-                _servers.Add(new MyServer("www.microsoft.com"));
-            }
-            catch
-            {
-                MessageBox.Show("Отсутствует соединение с Интернетом! Невозможно добавить хост www.google.com");
-            }
-            this.Show();
-            loading.Close();
-            for (int i = 0; i < _servers.Count; i++)
-            {
-                serversListBox.Items.Add($"{_servers[i].IP}   {_servers[i].HostName}");
-            }
-            
+            updateListServersButton_Click(sender, e); // Вызов обновления списк серверов
         }
 
+        // Регулировка кол-ва эхо-запросов
         private void numberOfEchoRequestsTrackBar_Scroll(object sender, EventArgs e)
         {
             _numberOfEchoRequests = numberOfEchoRequestsTrackBar.Value;
             numberOfEchoRequestsTextBox.Text = _numberOfEchoRequests.ToString();
         }
-
         private void numberOfEchoRequestsTextBox_TextChanged(object sender, EventArgs e)
         {
             try
@@ -103,17 +63,61 @@ namespace Client
             }
         }
 
-        private void contactServerButton_Click(object sender, EventArgs e)
+        // Методы кнопок панели управления
+        private void updateListServersButton_Click(object sender, EventArgs e)
+        {
+            _servers.Clear();
+            Loading loading = new Loading(); // Создаем загрузочный экран
+            loading.Show();                  // Запуск загрузочного экрана
+            this.Hide();                     // Сокрытие основной формы
+            loading.Update();                   
+            IPEndPoint[] allIPEndPoints = IPGlobalProperties.GetIPGlobalProperties().GetActiveTcpListeners(); // Поиск хостов внутри локальной сети
+            foreach (IPEndPoint iPEndPoint in allIPEndPoints)
+            {
+                if (iPEndPoint.Address.ToString() != IPAddress.None.ToString() && iPEndPoint.Address.ToString() != IPAddress.Any.ToString() && iPEndPoint.AddressFamily == AddressFamily.InterNetwork) // Выбор IPv4 хостов
+                {
+                    _servers.Add(new MyServer(iPEndPoint.Address));
+                }
+            }
+            try
+            {
+                // Добавление вручную нескольких хостов
+                IPEndPoint iPEnd = new IPEndPoint(Dns.GetHostByName("www.google.com").AddressList[0], _port);
+                _servers.Add(new MyServer("www.google.com"));
+                iPEnd = new IPEndPoint(Dns.GetHostByName("www.microsoft.com").AddressList[0], _port);
+                _servers.Add(new MyServer("www.microsoft.com"));
+            }
+            catch
+            {
+                MessageBox.Show("Отсутствует соединение с Интернетом! Невозможно добавить хост www.google.com");
+            }
+            this.Show();                    // Показ главной формы
+            loading.Close();                // Закрытие загрузочного экрана
+            UpdateServerListBox();          // Вывод серверов в ListBox
+
+        }
+        private void infoButton_Click(object sender, EventArgs e)
         {
             if (ServerSelected())
             {
-                if (contactByIPRadioButton.Checked)
+                GetSelectedServer().Nslookup(messageTextBox);
+            }
+            else
+            {
+                MessageBox.Show("Выберите сервер из списка для взаимодействия!");
+            }
+        }
+        private void pingServerButton_Click(object sender, EventArgs e)
+        {
+            if (ServerSelected())
+            {
+                if (contactByIPRadioButton.Checked)         // Если выбран Ping по IP-адресу сервера
                 {
-                    _servers[serversListBox.SelectedIndex].LinkingByIPAdress(messageTextBox, _numberOfEchoRequests);
+                    GetSelectedServer().PingByIPAdress(messageTextBox, _numberOfEchoRequests);
                 }
-                else if (contactByNameRadioButton.Checked)
+                else if (contactByNameRadioButton.Checked)  // Если выбран Ping по имени сервера
                 {
-                    _servers[serversListBox.SelectedIndex].LinkingByName(messageTextBox, _numberOfEchoRequests);
+                    GetSelectedServer().PingByName(messageTextBox, _numberOfEchoRequests);
                 }
                 MessageBox.Show("Выполнение утилиты Ping завершено!");
             }
@@ -122,45 +126,55 @@ namespace Client
                 MessageBox.Show("Выберите сервер из списка для взаимодействия!");
             }
         }
-
-        private void serversListBox_SelectedIndexChanged(object sender, EventArgs e)
+        private void tracertButton_Click(object sender, EventArgs e)
         {
-
-        }
-
-        private void Client_Load(object sender, EventArgs e)
-        {
-            updateListServersButton_Click(sender, e);   
-        }
-
-        private void clearMessageTextBoxButton_Click(object sender, EventArgs e)
-        {
-            messageTextBox.Text = "";
-        }
-
-        private bool ServerSelected()
-        {
-            return serversListBox.SelectedIndex > -1;
-        }
-
-        private void infoButton_Click(object sender, EventArgs e)
-        {
-            if(ServerSelected())
+            if (ServerSelected())
             {
-                messageTextBox.Text = MyNslookup.GetInfo(_servers[serversListBox.SelectedIndex]);
+                GetSelectedServer().Tracert(messageTextBox);
+                MessageBox.Show("Выполнение утилиты Tracert завершено!");
             }
             else
             {
                 MessageBox.Show("Выберите сервер из списка для взаимодействия!");
             }
         }
-
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            if (ServerSelected())
+            {
+                string serverName = GetSelectedServer().HostName;                    // Записываем имя сервера
+                IPAddress serverIP = GetSelectedServer().IP;                         // Записываем IP сервера
+                _servers[serversListBox.SelectedIndex] = null;                       // Обнуляем данным о выбранном сервере
+                List<MyServer> _updateServers = new List<MyServer>();                // Создаем новый лист серверов
+                for (int i = 0; i < _servers.Count; i++)                             // Заполняем лист всеми кроме удаленного
+                {
+                    if (_servers[i] != null)
+                    {
+                        _updateServers.Add(_servers[i]);
+                    }
+                }
+                _servers = _updateServers;                                           // Присваиваем основному листу вспомогательный 
+                UpdateServerListBox();                                               // Обновляем ListBox, заново выводя сервера
+                MessageBox.Show($"Выбранный сервер был успешно удален!\r\n Name: {serverName}\r\n IP: {serverIP}");
+            }
+            else
+            {
+                MessageBox.Show("Выберите сервер из списка для взаимодействия!");
+            }
+        }
         private void findOtherButton_Click(object sender, EventArgs e)
         {
             AddServer addServerForm = new AddServer(this);
             addServerForm.Show();
         }
 
+        // Метод очистки окна вывода сообщений
+        private void clearMessageTextBoxButton_Click(object sender, EventArgs e)
+        {
+            messageTextBox.Text = "";
+        }
+        
+        // Вспомогательные методы
         public void AddServer(IPAddress iP)
         {
             _servers.Add(new MyServer(iP));
@@ -169,7 +183,6 @@ namespace Client
         {
             _servers.Add(new MyServer(hostname));
         }
-
         public void UpdateServerListBox()
         {
             serversListBox.Items.Clear();
@@ -178,45 +191,13 @@ namespace Client
                 serversListBox.Items.Add($"{server.IP}    {server.HostName}");   
             }
         }
-
-        private void tracertButton_Click(object sender, EventArgs e)
+        private bool ServerSelected()
         {
-            if (ServerSelected())
-            {
-                MyTracert.Trace(_servers[serversListBox.SelectedIndex], messageTextBox);
-                MessageBox.Show("Выполнение утилиты Tracert завершено!");
-            }
-            else
-            {
-                MessageBox.Show("Выберите сервер из списка для взаимодействия!");
-            }
+            return serversListBox.SelectedIndex > -1;
         }
-
-        private void deleteButton_Click(object sender, EventArgs e)
+        private MyServer GetSelectedServer()
         {
-            if (ServerSelected())
-            {
-                string serverName = _servers[serversListBox.SelectedIndex].HostName;
-                IPAddress serverIP = _servers[serversListBox.SelectedIndex].IP;
-                _servers[serversListBox.SelectedIndex] = null;
-                List<MyServer> _updateServers = new List<MyServer>();
-                for (int i = 0; i < _servers.Count; i++)
-                {
-                    if (_servers[i] != null)
-                    {
-                        _updateServers.Add(_servers[i]);
-                    }
-                }
-                _servers = _updateServers;
-                UpdateServerListBox();
-                MessageBox.Show($"Выбранный сервер был успешно удален!\r\n Name: {serverName}\r\n IP: {serverIP}");
-            }
-            else
-            {
-                MessageBox.Show("Выберите сервер из списка для взаимодействия!");
-            }
+            return _servers[serversListBox.SelectedIndex];
         }
     }
-
-    
 }

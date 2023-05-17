@@ -33,7 +33,7 @@
             this.serversListBox = new System.Windows.Forms.ListBox();
             this.messageBoxLabel = new System.Windows.Forms.Label();
             this.updateListServersButton = new System.Windows.Forms.Button();
-            this.contactServerButton = new System.Windows.Forms.Button();
+            this.pingServerButton = new System.Windows.Forms.Button();
             this.contactByNameRadioButton = new System.Windows.Forms.RadioButton();
             this.contactByIPRadioButton = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
@@ -72,7 +72,6 @@
             this.serversListBox.Name = "serversListBox";
             this.serversListBox.Size = new System.Drawing.Size(420, 204);
             this.serversListBox.TabIndex = 1;
-            this.serversListBox.SelectedIndexChanged += new System.EventHandler(this.serversListBox_SelectedIndexChanged);
             // 
             // messageBoxLabel
             // 
@@ -95,16 +94,16 @@
             this.updateListServersButton.UseVisualStyleBackColor = true;
             this.updateListServersButton.Click += new System.EventHandler(this.updateListServersButton_Click);
             // 
-            // contactServerButton
+            // pingServerButton
             // 
-            this.contactServerButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.contactServerButton.Location = new System.Drawing.Point(28, 404);
-            this.contactServerButton.Name = "contactServerButton";
-            this.contactServerButton.Size = new System.Drawing.Size(155, 41);
-            this.contactServerButton.TabIndex = 5;
-            this.contactServerButton.Text = "Ping 💬";
-            this.contactServerButton.UseVisualStyleBackColor = true;
-            this.contactServerButton.Click += new System.EventHandler(this.contactServerButton_Click);
+            this.pingServerButton.Font = new System.Drawing.Font("Times New Roman", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.pingServerButton.Location = new System.Drawing.Point(28, 404);
+            this.pingServerButton.Name = "contactServerButton";
+            this.pingServerButton.Size = new System.Drawing.Size(155, 41);
+            this.pingServerButton.TabIndex = 5;
+            this.pingServerButton.Text = "Ping 💬";
+            this.pingServerButton.UseVisualStyleBackColor = true;
+            this.pingServerButton.Click += new System.EventHandler(this.pingServerButton_Click);
             // 
             // contactByNameRadioButton
             // 
@@ -283,7 +282,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.contactByIPRadioButton);
             this.Controls.Add(this.contactByNameRadioButton);
-            this.Controls.Add(this.contactServerButton);
+            this.Controls.Add(this.pingServerButton);
             this.Controls.Add(this.updateListServersButton);
             this.Controls.Add(this.messageBoxLabel);
             this.Controls.Add(this.serversListBox);
@@ -305,7 +304,7 @@
         private ListBox serversListBox;
         private Label messageBoxLabel;
         private Button updateListServersButton;
-        private Button contactServerButton;
+        private Button pingServerButton;
         private RadioButton contactByNameRadioButton;
         private RadioButton contactByIPRadioButton;
         private Label label1;

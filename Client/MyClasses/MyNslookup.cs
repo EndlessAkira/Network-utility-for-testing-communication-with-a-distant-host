@@ -10,23 +10,24 @@ namespace Client.MyClasses
             string message = $"Информация о сервере {server.HostName}:\r\n\r\n";
             try
             {
-                IPHostEntry host = Dns.GetHostByName(server.HostName);
-                IPAddress[] ips = host.AddressList;
-                List<IPAddress> ipV4 = new List<IPAddress>();
-                List<IPAddress> ipV6 = new List<IPAddress>();
+                IPHostEntry host = Dns.GetHostByName(server.HostName); // Получение хоста по имени сервера
+                IPAddress[] ips = host.AddressList;                    // Определение массива IP-адресов хоста
+                List<IPAddress> ipV4 = new List<IPAddress>();          // Обьявление листа IPv4-адресов
+                List<IPAddress> ipV6 = new List<IPAddress>();          // Обьявление листа IPv6-адресов
                 foreach (IPAddress ip in ips)
                 {
-                    if (ip.AddressFamily == AddressFamily.InterNetwork)
+                    if (ip.AddressFamily == AddressFamily.InterNetwork)// Если адрес относится к IPv4
                     {
                         ipV4.Add(ip);
                     }
-                    else if (ip.AddressFamily == AddressFamily.InterNetworkV6)
+                    else if (ip.AddressFamily == AddressFamily.InterNetworkV6)// Если адрес относится к IPv6
                     {
                         ipV6.Add(ip);
                     }
                 }
                 if (ipV4.Count > 0)
                 {
+                    // Вывод IPv4 адресов если их кол-во больше нуля
                     message += "Адрес(-а) IPv4:\r\n";
                     foreach (var ip in ipV4)
                     {
@@ -35,6 +36,7 @@ namespace Client.MyClasses
                 }
                 if (ipV6.Count > 0)
                 {
+                    // Вывод IPv6 адресов если их кол-во больше нуля
                     message += "\r\nАдрес(-а) IPv6:\r\n";
                     foreach (var ip in ipV6)
                     {
@@ -44,6 +46,7 @@ namespace Client.MyClasses
                 string[] aliesNames = host.Aliases;
                 if (aliesNames.Length > 0)
                 {
+                    // Вывод Alies-имён если их кол-во больше нуля
                     message += "\r\nAlias-имена домена:\r\n";
                     foreach (string aliesName in aliesNames)
                     {

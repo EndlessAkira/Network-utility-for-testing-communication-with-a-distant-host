@@ -33,7 +33,7 @@ namespace Client.MyClasses
             IP = address;
             HostName = Dns.GetHostByAddress(IP).HostName;
         }
-        public void LinkingByIPAdress(RichTextBox textBox, int numberOfEchoRequests)
+        public void PingByIPAdress(RichTextBox textBox, int numberOfEchoRequests)
         {
             textBox.Text = "Выполнение проверки соединения с сервером по IPv4\r\n\r\n";
             try
@@ -67,7 +67,7 @@ namespace Client.MyClasses
                 textBox.Update();
             }
         }
-        public void LinkingByName(RichTextBox textBox, int numberOfEchoRequests)
+        public void PingByName(RichTextBox textBox, int numberOfEchoRequests)
         {
             textBox.Text = "Выполнение проверки соединения с сервером по имени хоста\r\n\r\n";
             try
@@ -118,6 +118,14 @@ namespace Client.MyClasses
                 textBox.Text += "При проверке связи не удалось подключиться к выбранному узлу\r\n";
                 textBox.Update();
             }
+        }
+        public void Tracert(RichTextBox textBox)
+        {
+            MyTracert.Trace(this, textBox);
+        }
+        public void Nslookup(RichTextBox textBox)
+        {
+            textBox.Text = MyNslookup.GetInfo(this);
         }
         private float FindMin(List<float> list)
         {
